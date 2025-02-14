@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-""" CNT 5410 -- Assignment 1: Passwords -- utils.py
-"""
+
 
 
 import json
