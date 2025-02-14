@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-""" CNT5410 -- Assignment 1: Passwords -- attack.py
-
-#  This file tests the attacks
-"""
 
 
 import os
@@ -15,19 +11,6 @@ import random
 import sys
 
 
-
-"""
-## Simple exhaustive attack.
-
-    Inputs:
-        pc: performance counter (PerfCounter),
-        next_fn: next candidate password function,
-        pwhash_fn: compute password hash function,
-        pwhash_list: the list of password hashes we want to invert (find the plaintext password for)
-        
-    Outputs:
-        results: array of length len(pwhash_list) containing the matching passwords (or None)
-"""
 def simple_exhaustive_attack(pc, pw_gen, pwhash_fn, pwhash_list):
     results = [None for i in range(0, len(pwhash_list))]
 
@@ -130,33 +113,18 @@ def test_simple_exhaustive_attack(pwlist_fp, next_fn, pwhash_fn, shortdesc):
     return pwres, pwlist_obj
 
 
-## TODO: Problem 4.3 --- (20 pts + 5 pts [bonus]) ##
-"""
-## Bob's custom pwhash attack.
-
-    Inputs:
-        pc: performance counter (PerfCounter),
-        char_list: list of characters,
-        length: length of the passwords,
-        pwlist_obj: the object of password hashes
-
-    Outputs:
-        results: array of length len(pwlist_obj) containing the matching passwords (or None)
-"""
 def bobs_custom_pwhash_attack(pc, char_list, length, pwlist_obj):
 
     results = [None for i in range(0, len(pwlist_obj))]
     assert (length % 2 == 0), 'Length must be a multiple of 2'
 
     pwhash_fn = crypto.bobs_custom_pw_hash
-
-    ## TODO ##
-    ## Insert your code here
+    
     import operator
-    pwhash_length = len(pwlist_obj[0]['hash'])          # Get whole password hash length
-    l = int(pwhash_length/3)                            # Get length of a one hash part 
-    pwhash_fn_p1_truncated = lambda p: crypto.truncated_sha2_hex_digest(p + '-p1', 6)       # Define hash function for p1
-    pwhash_fn_p2_truncated = lambda p: crypto.truncated_sha2_hex_digest(p + '-p2', 6)       # Define hash function for p2
+    pwhash_length = len(pwlist_obj[0]['hash'])          
+    l = int(pwhash_length/3)                             
+    pwhash_fn_p1_truncated = lambda p: crypto.truncated_sha2_hex_digest(p + '-p1', 6)       
+    pwhash_fn_p2_truncated = lambda p: crypto.truncated_sha2_hex_digest(p + '-p2', 6)       
     hash_p1, hash_p2, salt_c, salts, pwhashs = [], [], [], [], []   # Store all the p1, p2's to bruteforce toghether
     # raise NotImplementedError()
 
@@ -166,19 +134,17 @@ def bobs_custom_pwhash_attack(pc, char_list, length, pwlist_obj):
 
         pwhash = pwitem['hash']
 
-        ## TODO ##
-        ## Insert your code here
-        hash_p1 += [pwhash[:l]]          # Get hash of p1 from given hash as a list
-        hash_p2 += [pwhash[l:2*l]]       # Get hash of p2 from given hash as a list
-        salt_c.append(pwhash[2*l:])         # Get last hash part from given hash as a list (not useful)
-        salts.append(salt)                  # Store salts
-        pwhashs.append(pwhash)              # Store password hashes
-        if(i == len(pwlist_obj) - 1):       # This condition only true in last iteration.
+        hash_p1 += [pwhash[:l]]          
+        hash_p2 += [pwhash[l:2*l]]       
+        salt_c.append(pwhash[2*l:])         
+        salts.append(salt)                  
+        pwhashs.append(pwhash)              
+        if(i == len(pwlist_obj) - 1):       
             pw_gen_1 = crypto.candidate_bf_generator(char_list, int(length/2))    
-            p1 = simple_exhaustive_attack(pc, pw_gen_1, pwhash_fn_p1_truncated, hash_p1) # Brute force attack to find p1 together
+            p1 = simple_exhaustive_attack(pc, pw_gen_1, pwhash_fn_p1_truncated, hash_p1) 
             pw_gen_2 = crypto.candidate_bf_generator(char_list, int(length/2))
-            p2 = simple_exhaustive_attack(pc, pw_gen_2, pwhash_fn_p2_truncated, hash_p2) # Brute force attack to find p2 together
-            results = list(map(operator.add, p1, p2))          # Concatenate to form p
+            p2 = simple_exhaustive_attack(pc, pw_gen_2, pwhash_fn_p2_truncated, hash_p2) 
+            results = list(map(operator.add, p1, p2))          
 
             # This loop runs in last iteration. This is not neccesary for crack passswords
             for j in range(len(pwlist_obj)):             # To check pwhash_fn(salt, password) == pwhash
@@ -273,7 +239,6 @@ def main():
                     lambda: shutil.rmtree(test_workdir))
 
     elif problem == 4:
-        ## TODO: uncomment as needed (Problem 4.3)
         pw_length = 4
         #pw_length = 6
         #pw_length = 8
