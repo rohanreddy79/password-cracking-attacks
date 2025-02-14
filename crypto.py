@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-""" CNT5410 - - Assignment 1: Passwords -- crypto.py
-"""
 
 import binascii
 import random
@@ -165,26 +163,12 @@ def candidate_bf_generator(char_list, max_length):
         counter += 1
 
 
-## TODO: Problem 1.1 --- (10 pts) ##
-""" 
-## Generator of dictionary-based passwords
-    Pattern is: <w> or <w><s>, where <w> denotes a word and <s> denotes a suffix character
 
-    Inputs:
-        words: the list of words in the dictionary,
-        suffix: the list of suffix characters
-
-    Outputs:
-        the (candidate) password
-"""
 def candidate_dict_generator(words, suffix):
     counter = 0
     lw = len(words)
     lc = len(suffix)
 
-    ## TODO ##
-    ## Insert your code here
-    ## hint: use get_candidate_dict()
     candidate_count = lw + lw*lc
     
     for counter in range(candidate_count):
