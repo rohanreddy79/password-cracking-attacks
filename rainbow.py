@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""  CNT5410 -- Assignment 1: Passwords -- rainbow.py
-"""
+
 
 import sys
 import utils
@@ -24,9 +23,6 @@ import utils
 def build_rainbow(pc, out_fp, num_chains, k, pwhash_fn, reduce_fn, random_candidates_fn):
 
     table = {}
-
-    ## TODO: Problem 3.4 (5 pts) ##
-    ## Put your code here to avoid duplicating start points
     startpoints = {}
 
     sys.stdout.write('Building rainbow table')
@@ -34,8 +30,6 @@ def build_rainbow(pc, out_fp, num_chains, k, pwhash_fn, reduce_fn, random_candid
         # build chain i
         startpoint = random_candidates_fn()
 
-        ## TODO: Problem 3.4 (5 pts) ##
-        ## Put your code here to avoid duplicating start points
         if i > 36 ** 4: # To make sure i is less than number of possible passwords.
             break       # If yes break the loop. Otherwise below while loop will not have a exit
 
@@ -67,8 +61,7 @@ def build_rainbow(pc, out_fp, num_chains, k, pwhash_fn, reduce_fn, random_candid
     print(' done.')
 
 
-## TODO: Problem 2.1 --- (20 pts) ##
-"""
+
 ## Rainbow table lookup.
 
     Inputs:
@@ -90,8 +83,7 @@ def lookup_rainbow(pc, in_fp, k, pwhash_fn, reduce_fn, pwhash_list, verbose = Fa
     for pwidx, pwhash in enumerate(pwhash_list):
 
         chain_infos = []
-        ## TODO ##
-        ## Put your code here
+
         for i in range(0,k):       
             pwhash_next = pwhash  
             for l in range(i,k):   
@@ -113,8 +105,7 @@ def lookup_rainbow(pc, in_fp, k, pwhash_fn, reduce_fn, pwhash_list, verbose = Fa
                 break
 
             found = False
-            ## TODO ##
-            ## Put your code here
+
             for j in range(0, k):               
                 # do one iteration
                 hv = pwhash_fn(current)
